@@ -1,0 +1,467 @@
+/* ==========================================================================
+   AI Trading Bot - Main Stylesheet
+   Version: 1.0.0
+   Description: Responsive CSS for trading bot web interface with sidebar,
+                navbar, and chat components. Supports dark/light themes.
+   Author: Trading Bot Team
+   License: Proprietary
+   ========================================================================== */
+
+/* ==========================================================================
+   CSS Custom Properties (Theme Variables)
+   ========================================================================== */
+
+:root {
+  /* Color Palette - Dark Theme (Default) */
+  --color-primary: #00c853;
+  --color-primary-hover: #00e676;
+  --color-primary-light: rgba(0, 200, 83, 0.1);
+  --color-secondary: #2979ff;
+  --color-secondary-hover: #448aff;
+  --color-danger: #ff1744;
+  --color-danger-hover: #ff5252;
+  --color-warning: #ffab00;
+  --color-warning-hover: #ffc400;
+  
+  /* Background Colors */
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1f2937;
+  --bg-card: #1a2332;
+  --bg-input: #1f2937;
+  --bg-hover: rgba(255, 255, 255, 0.05);
+  
+  /* Text Colors */
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --text-inverse: #111827;
+  
+  /* Border Colors */
+  --border-color: #374151;
+  --border-color-light: #4b5563;
+  
+  /* Sidebar */
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 64px;
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #94a3b8;
+  --sidebar-text-active: #e2e8f0;
+  --sidebar-hover-bg: rgba(255, 255, 255, 0.05);
+  
+  /* Navbar */
+  --navbar-height: 64px;
+  --navbar-bg: rgba(15, 23, 42, 0.95);
+  
+  /* Chat */
+  --chat-max-width: 800px;
+  --chat-bubble-user-bg: var(--color-primary);
+  --chat-bubble-user-text: var(--text-inverse);
+  --chat-bubble-bot-bg: var(--bg-tertiary);
+  --chat-bubble-bot-text: var(--text-primary);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  
+  /* Z-index layers */
+  --z-sidebar: 100;
+  --z-navbar: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+}
+
+/* Light Theme Overrides */
+[data-theme="light"] {
+  --color-primary: #00a844;
+  --color-primary-hover: #00c853;
+  
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --bg-card: #ffffff;
+  
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  
+  --border-color: #e2e8f0;
+  
+  --sidebar-bg: #ffffff;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  padding: var(--navbar-height) var(--sidebar-width) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  
+}
+
+/* ==========================================================================
+   Sidebar Component
+   ========================================================================== */
+
+.sidebar {
+    position: fixed;
+    top: var(--navbar-height);
+    left: -100%;
+    width: var(--sidebar-width);
+    height: calc(100vh - var(--navbar-height));
+    background-color: var(--sidebar-bg);
+    border-right: solid var(--border-color) thin; 
+    transition : left var(--transition-normal);
+    z-index : var(--z-sidebar);
+    overflow-y : auto; 
+}
+
+.sidebar.open {
+    left :0; 
+}
+
+@media (min-width :768px) {
+    .sidebar {
+        left :0; 
+    }
+}
+
+.sidebar-header {
+    padding :1rem; 
+    border-bottom : solid var(--border-color) thin; 
+}
+
+.sidebar-logo {
+    display :flex; 
+    align-items :center; 
+    gap :0.75rem; 
+    text-decoration :none; 
+    color :var(--text-primary); 
+    font-weight :600; 
+    font-size :1.125rem; 
+}
+
+.sidebar-logo img {
+    width :32px; 
+    height :32px; 
+}
+
+.sidebar-nav {
+    padding :1rem ; 
+}
+
+.nav-item {
+    display :flex; 
+    align-items :center; 
+    gap :0.75rem ; 
+    padding :0.75rem ; 
+    margin-bottom :0.25rem ; 
+    border-radius :var(--radius-md); 
+    color :var(--sidebar-text); 
+    text-decoration :none ; 
+    transition :background-color var(--transition-fast), color var(--transition-fast); 
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background-color :var(--sidebar-hover-bg); 
+    color :var(--sidebar-text-active); 
+}
+
+.nav-item.active {
+    border-left : solid var(--color-primary) thick; 
+}
+
+.nav-icon {
+    width :20px ; 
+    height :20px ; 
+    flex-shrink :0 ; 
+}
+
+.nav-label {
+    font-size :0.875rem ; 
+    font-weight :500 ; 
+}
+
+/* ==========================================================================
+   Navbar Component
+   ========================================================================== */
+
+.navbar {
+    position :fixed ; 
+    top :0 ; 
+    left :0 ; 
+    right :0 ; 
+    height :var(--navbar-height); 
+    background-color :var(--navbar-bg); 
+    backdrop-filter :blur(12px); 
+    border-bottom : solid var(--border-color) thin ; 
+    z-index :var(--z-navbar); 
+}
+
+.navbar-container {
+    display :flex ; 
+    align-items :center ; 
+    justify-content :space-between ; 
+    height :100% ; 
+    padding-left :1rem ; 
+    padding-right :1rem ; 
+}
+
+.navbar-left {
+    display :flex ; 
+    align-items :center ; 
+    gap :1rem ; 
+}
+
+.navbar-toggle {
+    display :flex ; 
+    align-items :center ; 
+    justify-content :center ; 
+    width :40px ; 
+    height :40px ; 
+    background-color transparent;  
+    border none;  
+    color var(--text-primary);  
+    cursor pointer;  
+}
+
+@media (min-width768px) { .navbar-toggle { display none; } }
+
+.navbar-title { font-size1.25rem font-weight600 colorvar(--text-primary) }
+
+.navbar-right { displayflex alignitemscenter gap1rem }
+
+.navbar-search { positionrelative }
+
+.search-input { width240px padding0.5rem1rem background-colorvar(--bg-input) border solid thin var(--border-color) border-radiusvar(--radius-md) colorvar(--text-primary) font-size0.875rem }
+
+.search-input::placeholder { colorvar(--text-muted) }
+
+.search-inputfocus { outline none border-colorvar(--color-primary) box-shadow00  4px rgba(020083  0.2) }
+
+.navbar-actions { displayflex alignitemscenter gap0.5rem }
+
+.btn-icon { displayflex alignitemscenter justifycontentcenter width36px height36px background-color transparent border none border-radiusvar(--radius-md) colorvar(--text-secondary) cursor pointer transitionbackground-color var(--transition-fast) colortransitionfast }
+
+.btn-iconhover { background-colorvar(--bg-hover) colorvar(--text-primary) }
+
+.notification-dot { positionabsolute top8px right8px width8px height8px background-colorvar(--color-danger) border-radius50% }
+
+/* ==========================================================================
+   Chat Component
+   ========================================================================== */
+
+.chat-container { displayflex flexdirectioncolumn heightcalc100vh - var(--navbar-height)) }
+
+.chat-messages { flex1 overflowyauto padding1rem }
+
+.chat-message { displayflex marginbottom1rem animationfadeIn var(--transition-normal) }
+
+.chat-message.user { justify-contentflex-end }
+
+.chat-message.bot { justify-contentflex-start }
+
+.chat-bubble { max-widthcalc(100% -  2rem) padding0.75rem1rem border-radiusvar(--radius-lg) lineheight1.5 word-wrapbreak-word whitespacepre-wrap }
+
+.chat-message.user .chat-bubble { background-colorvar(--chat-bubble-user-bg) colorvar(--chat-bubble-user-text) border-bottom-right-radiusvar(--radius-sm) }
+
+.chat-message.bot .chat-bubble { background-colorvar(--chat-bubble-bot-bg) colorvar(--chat-bubble-bot-text) border-bottom-left-radiusvar(--radius-sm) }
+
+.chat-timestamp { font-size0.75rem colorvar(--text-muted) margintop4px }
+
+.chat-input-container { padding1rem background-colorvar(--bg-secondary) bordertop solid thin var(--border-color) }
+
+.chat-input-wrapper { displayflex alignitemscenter gap0.75rem max-widthvar(--chat-max-width) margin0auto }
+
+.chat-input { flex1 padding0.75rem1rem background-colorvar(--bg-input) border solid thin var(--border-color) border-radiusvar(--radius-lg) colorvar(--text-primary) font-size0.9375rem resize none min-height44px max-height120px }
+
+.chat-input::placeholder { colorvar(--text-muted) }
+
+.chat-inputfocus { outline none border-colorvar(--color-primary) box-shadow00  4px rgba(020083  0.2) }
+
+.send-button { displayflex alignitemscenter justifycontentcenter width44px height44px background-colorvar(--color-primary) border none border-radius50% colorwhite cursor pointer transitionbackground-color var(--transition-fast), transform var(--transition-fast), box-shadow var (--transition-fast); flex-shrink0 }
+
+.send-buttonhover { background-colorvar(--color-primary-hover) transformscale(1.05) box-shadow00  8px rgba(020083  0.3) }
+
+.send-buttondisabled { opacity0.5 cursornot-allowed transformnone box-shadownone }
+
+.send-button svg { width20px height20px }
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+.text-center { text-aligncenter }
+.text-right { text-alignright }
+.text-left { text-alignleft }
+.text-muted { colorvar(--text-muted) }
+.text-danger { colorvar(--color-danger) }
+.text-success { colorvar(--color-primary) }
+.text-warning { colorvar (--color-warning)}
+
+.font-bold { font-weight700 }
+.font-medium { font-weight500 }
+.font-normal { font-weight400 }
+
+.truncate { overflowhidden text-overflowellipsis whitespacenowrap }
+
+.sr-only { positionabsolute width1px height1px padding0 margin-1px overflowhidden cliprect(00  00 ) whitespacenowrap border0 }
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+
+@keyframes fadeIn {
+     from{ opacity0 transformtranslateY(10px)}
+     to{ opacity1 transformtranslateY(0)}
+}
+
+@keyframes slideInLeft {
+     from{ opacity0 transformtranslateX(-20px)}
+     to{ opacity1 transformtranslateX(0)}
+}
+
+@keyframes slideInRight {
+     from{ opacity0 transformtranslateX(20px)}
+     to{ opacity1 transformtranslateX(0)}
+}
+
+@keyframes pulse {
+     00%{ opacity1}
+     50%{ opacity0.5}
+     100%{ opacity1}
+}
+
+.fade-in { animationfadeIn var (--transition-normal)}
+.slide-in-left { animationslideInLeft var (--transition-normal)}
+.slide-in-right { animationslideInRight var (--transition-normal)}
+.pulse { animationpulse2s ease-in-out infinite}
+
+/* ==========================================================================
+   Scrollbar Styles
+   ========================================================================== */
+
+::-webkit-scrollbar {
+     width6px
+     height6px
+}
+
+::-webkit-scrollbar-track {
+     background transparent
+}
+
+::-webkit-scrollbar-thumb {
+     background-colorvar (--border-color)
+     border-radius3px
+}
+
+::-webkit-scrollbar-thumbhover {
+     background-colorvar (--border-color-light)
+}
+
+/* Firefox scrollbar */
+* {
+     scrollbar-width thin
+     scrollbar-color var (--border-color) transparent
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width767px){
+     body{
+         padding-left env(safe-area-inset-left)
+         padding-right env(safe-area-inset-right)
+     }
+     
+     .sidebar{
+         width100%
+         max-width320px
+     }
+     
+     .search-input{
+         width160px
+     }
+     
+     .chat-bubble{
+         max-widthcalc(100% -  1rem)
+     }
+     
+     .navbar-title{
+         font-size1rem
+     }
+}
+
+@media (min-width768px)and(max-width1023px){
+     .sidebar{
+         width220px
+     }
+     
+     body{
+         padding-left220px
+     }
+     
+     .search-input{
+         width200px
+     }
+}
+
+@media (min-width1024px){
+     .chat-messages{
+         padding2rem
+     }
+     
+     .chat-container{
+         max-widthvar (--chat-max-width)
+         margin0auto
+     }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print{
+     .sidebar,
+     .navbar,
+     .chat-input-container{
+         display none!important
+     }
+     
+     body{
+         padding-top env(safe-area-inset-top)
+         padding-left env(safe-area-inset-left)
+         padding-right env(safe-area-inset-right)
+     }
+     
+     .chat-message{
+         page-break-inside avoid
+     }
+}
