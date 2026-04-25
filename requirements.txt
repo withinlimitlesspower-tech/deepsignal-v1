@@ -1,0 +1,100 @@
+# AI-Powered Trading Bot - Python Dependencies
+# Version: 1.0.0
+# Last Updated: 2024-01-15
+
+# Core dependencies
+python-binance==1.0.19          # Binance exchange API integration
+ccxt==4.1.22                    # Unified cryptocurrency exchange API
+pandas==2.1.4                   # Data manipulation and analysis
+numpy==1.24.3                   # Numerical computing
+
+# Technical analysis and machine learning
+ta==0.10.2                      # Technical analysis indicators
+scikit-learn==1.3.2             # Machine learning models and preprocessing
+tensorflow==2.13.0              # Deep learning framework (optional, for advanced models)
+torch==2.1.0                    # PyTorch for DeepSeek V4 model integration
+
+# DeepSeek V4 model integration
+transformers==4.36.2            # Hugging Face transformers for model loading
+torchvision==0.16.0             # PyTorch vision library (required by transformers)
+accelerate==0.25.0              # Optimized model inference
+
+# Web framework and API
+fastapi==0.104.1                # Async web framework for REST API
+uvicorn[standard]==0.24.0       # ASGI server for FastAPI
+websockets==12.0                # WebSocket support for real-time data
+python-multipart==0.0.6         # File upload handling (for chat history exports)
+
+# Database and caching
+sqlalchemy==2.0.23              # ORM for database operations
+alembic==1.13.0                 # Database migrations
+redis==5.0.1                    # Caching and session management
+aiosqlite==0.19.0               # Async SQLite support
+
+# Chat history and session management
+beanie==1.22.2                  # MongoDB ODM for async operations
+motor==3.3.2                    # Async MongoDB driver
+pydantic==2.5.2                 # Data validation and settings management
+
+# Frontend and UI (if using Python-based web interface)
+jinja2==3.1.2                   # Template engine for HTML rendering
+markdown==3.5.1                 # Markdown parsing for chat messages
+
+# Data visualization
+plotly==5.18.0                  # Interactive charts for trading analysis
+matplotlib==3.8.2               # Static plotting capabilities
+
+# Logging and monitoring
+loguru==0.7.2                   # Advanced logging with rotation and formatting
+prometheus-client==0.19.0       # Metrics collection for monitoring
+
+# Security and authentication
+python-jose[cryptography]==3.3.0  # JWT token handling
+passlib[bcrypt]==1.7.4          # Password hashing
+python-dotenv==1.0.0            # Environment variable management
+
+# Async operations and scheduling
+asyncio==3.4.3                  # Async I/O support (built-in, listed for clarity)
+apscheduler==3.10.4             # Task scheduling for periodic trading operations
+
+# Data streaming and processing
+kafka-python==2.0.2             # Apache Kafka integration (optional, for high-volume data)
+confluent-kafka==2.3.0          # Confluent Kafka client (alternative)
+
+# Testing and development
+pytest==7.4.3                   # Testing framework
+pytest-asyncio==0.23.2          # Async test support
+pytest-cov==4.1.0               # Code coverage reporting
+black==23.12.1                  # Code formatter
+flake8==6.1.0                   # Linter for code quality
+mypy==1.7.1                     # Static type checking
+
+# Utility libraries
+requests==2.31.0                # HTTP requests (fallback for API calls)
+httpx==0.25.2                   # Async HTTP client (preferred)
+python-dateutil==2.8.2          # Date parsing utilities
+pytz==2023.3.post1              # Timezone handling
+
+# Optional dependencies (uncomment if needed)
+# yfinance==0.2.33              # Yahoo Finance data (for backtesting)
+# backtrader==1.9.78            # Backtesting framework
+# streamlit==1.29.0             # Quick UI prototyping (alternative to FastAPI)
+# dash==2.14.2                  # Dashboard creation (alternative to Plotly)
+
+# Development tools (for local setup only)
+# pip-tools==7.3.0              # Dependency management with pip-compile
+
+# Version constraints explanation:
+# - Major versions are pinned to ensure compatibility with DeepSeek V4 model
+# - Minor versions allow bug fixes within the same major version
+# - Use `pip install -r requirements.txt` to install all dependencies
+
+# For production deployment, consider using:
+# pip install --no-cache-dir -r requirements.txt
+
+# To generate a lock file with exact versions:
+# pip freeze > requirements-lock.txt
+
+# Note: Some dependencies may require system-level packages:
+# - torch: CUDA toolkit for GPU support (optional)
+# - python-binance: No additional system requirements
